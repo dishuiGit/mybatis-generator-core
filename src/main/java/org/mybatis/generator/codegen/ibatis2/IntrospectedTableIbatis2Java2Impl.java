@@ -31,6 +31,7 @@ import org.mybatis.generator.codegen.ibatis2.dao.DAOGenerator;
 import org.mybatis.generator.codegen.ibatis2.dao.templates.GenericCIDAOTemplate;
 import org.mybatis.generator.codegen.ibatis2.dao.templates.GenericSIDAOTemplate;
 import org.mybatis.generator.codegen.ibatis2.dao.templates.IbatisDAOTemplate;
+import org.mybatis.generator.codegen.ibatis2.dao.templates.IbatisNoNameSpaceDAOTemplate;
 import org.mybatis.generator.codegen.ibatis2.dao.templates.SpringDAOTemplate;
 import org.mybatis.generator.codegen.ibatis2.model.BaseRecordGenerator;
 import org.mybatis.generator.codegen.ibatis2.model.ExampleGenerator;
@@ -85,6 +86,8 @@ public class IntrospectedTableIbatis2Java2Impl extends IntrospectedTable {
 			javaGenerator = new DAOGenerator(new GenericCIDAOTemplate(), isJava5Targeted());
 		} else if ("GENERIC-SI".equalsIgnoreCase(type)) { //$NON-NLS-1$
 			javaGenerator = new DAOGenerator(new GenericSIDAOTemplate(), isJava5Targeted());
+		} else if ("IBATIS-NONAMESPACE".equalsIgnoreCase(type)) { //$NON-NLS-1$
+			javaGenerator = new DAOGenerator(new IbatisNoNameSpaceDAOTemplate(), isJava5Targeted());
 		} else {
 			javaGenerator = (AbstractJavaGenerator) ObjectFactory.createInternalObject(type);
 		}

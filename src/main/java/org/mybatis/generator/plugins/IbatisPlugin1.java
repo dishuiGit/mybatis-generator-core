@@ -34,11 +34,11 @@ import org.mybatis.generator.internal.rules.Rules;
  * @author QQ:34847009
  * @date 2010-10-21 下午09:33:48
  */
-public class IbatisCriteriaPlugin extends PluginAdapter {
+public class IbatisPlugin1 extends PluginAdapter {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(IbatisCriteriaPlugin.class);
+	private static final Logger logger = Logger.getLogger(IbatisPlugin1.class);
 
 	private FullyQualifiedJavaType criteria;
 	/** 数据库类型 */
@@ -55,137 +55,8 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 		return true;
 	}
 
-	@Override
-	public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
 
-		List<GeneratedJavaFile> files = new ArrayList<GeneratedJavaFile>();
-		TopLevelClass topLevelClass = new TopLevelClass(criteria);
-		topLevelClass.setVisibility(JavaVisibility.PUBLIC);
-		addClassComment(topLevelClass, "公用条件查询类");
-		topLevelClass.addImportedType(FullyQualifiedJavaType.getNewMapInstance());
-		topLevelClass.addImportedType(FullyQualifiedJavaType.getNewHashMapInstance());
-
-		FullyQualifiedJavaType types = new FullyQualifiedJavaType("java.util.Map<java.lang.String, java.lang.Object>");
-		Rules rules = introspectedTable.getRules();
-		if (rules.generateUpdateByExampleSelective() || rules.generateUpdateByExampleWithBLOBs()
-				|| rules.generateUpdateByExampleWithoutBLOBs()) {
-			Method method = new Method();
-			method.setVisibility(JavaVisibility.PROTECTED);
-			method.setConstructor(true);
-			method.setName(criteria.getShortName());
-			method.addParameter(new Parameter(criteria, "example")); //$NON-NLS-1$
-			method.addBodyLine("this.orderByClause = example.orderByClause;"); //$NON-NLS-1$
-			method.addBodyLine("this.condition = example.condition;"); //$NON-NLS-1$
-			method.addBodyLine("this.distinct = example.distinct;"); //$NON-NLS-1$
-			method.addBodyLine("this.limit = example.limit;"); //$NON-NLS-1$
-			method.addBodyLine("this.start = example.start;"); //$NON-NLS-1$
-			topLevelClass.addMethod(method);
-		}
-
-		Field field = new Field();
-		field.setVisibility(JavaVisibility.PRIVATE);
-		field.setType(types);
-		field.setName("condition"); //$NON-NLS-1$
-		addFieldComment(field, "存放条件查询值");
-		topLevelClass.addField(field);
-
-		// add field, getter, setter for distinct
-		field = new Field();
-		field.setVisibility(JavaVisibility.PROTECTED);
-		field.setType(FullyQualifiedJavaType.getBooleanPrimitiveInstance());
-		field.setName("distinct"); //$NON-NLS-1$
-		addFieldComment(field, "是否相异");
-		topLevelClass.addField(field);
-
-		// add field, getter, setter for orderby clause
-		field = new Field();
-		field.setVisibility(JavaVisibility.PROTECTED);
-		field.setType(FullyQualifiedJavaType.getStringInstance());
-		field.setName("orderByClause"); //$NON-NLS-1$
-		addFieldComment(field, "排序字段");
-		topLevelClass.addField(field);
-
-		Method method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setConstructor(true);
-		method.setName("Criteria"); //$NON-NLS-1$
-		method.addBodyLine("condition = new HashMap<String, Object>();"); //$NON-NLS-1$
-		topLevelClass.addMethod(method);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("clear"); //$NON-NLS-1$
-		method.addBodyLine("condition.clear();"); //$NON-NLS-1$
-		method.addBodyLine("orderByClause = null;"); //$NON-NLS-1$
-		method.addBodyLine("distinct = false;"); //$NON-NLS-1$
-		method.addBodyLine("this.limit=null;"); //$NON-NLS-1$
-		method.addBodyLine("this.start=null;"); //$NON-NLS-1$
-		topLevelClass.addMethod(method);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setReturnType(criteria);
-		method.setName("put"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "condition")); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getObjectInstance(), "value")); //$NON-NLS-1$
-		method.addBodyLine("this.condition.put(condition, value);"); //$NON-NLS-1$
-		method.addBodyLine("return (Criteria) this;"); //$NON-NLS-1$
-		addSetterComment(method, OutputUtilities.lineSeparator+"\t *            查询的条件名称"+OutputUtilities.lineSeparator+"\t * @param value"+OutputUtilities.lineSeparator+"\t *            查询的值", "condition");
-		topLevelClass.addMethod(method);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("setOrderByClause"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "orderByClause")); //$NON-NLS-1$
-		method.addBodyLine("this.orderByClause = orderByClause;"); //$NON-NLS-1$
-		addSetterComment(method, OutputUtilities.lineSeparator+"\t *            排序字段", "orderByClause");
-		topLevelClass.addMethod(method);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("setDistinct"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getBooleanPrimitiveInstance(), "distinct")); //$NON-NLS-1$
-		method.addBodyLine("this.distinct = distinct;"); //$NON-NLS-1$
-		addSetterComment(method, OutputUtilities.lineSeparator+"\t *            是否相异", "distinct");
-		topLevelClass.addMethod(method);
-
-		field = new Field();
-		field.setVisibility(JavaVisibility.PRIVATE);
-		field.setType(FullyQualifiedJavaType.getInteger());
-		field.setName("limit"); //$NON-NLS-1$
-		topLevelClass.addField(field);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("setLimit"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getInteger(), "limit")); //$NON-NLS-1$
-		method.addBodyLine("this.limit = limit;"); //$NON-NLS-1$
-		addSetterComment(method, "每页大小，即mysql中的length", "limit");
-		topLevelClass.addMethod(method);
-
-		field = new Field();
-		field.setVisibility(JavaVisibility.PRIVATE);
-		field.setType(FullyQualifiedJavaType.getInteger());
-		field.setName("start"); //$NON-NLS-1$
-		topLevelClass.addField(field);
-
-		method = new Method();
-		method.setVisibility(JavaVisibility.PUBLIC);
-		method.setName("setStart"); //$NON-NLS-1$
-		method.addParameter(new Parameter(FullyQualifiedJavaType.getInteger(), "start")); //$NON-NLS-1$
-		method.addBodyLine("this.start = start;"); //$NON-NLS-1$
-		addSetterComment(method, "开始行数，即mysql中的offset", "start");
-		topLevelClass.addMethod(method);
-
-
-		GeneratedJavaFile file = new GeneratedJavaFile(topLevelClass, context.getJavaModelGeneratorConfiguration()
-				.getTargetProject());
-		files.add(file);
-		return files;
-	}
-
-	@Override
-	public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+	public boolean clientGenerated1(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 		// 接口方法
 		List<Method> methods = interfaze.getMethods();
 		Parameter parameter = new Parameter(criteria, "example");
@@ -239,8 +110,33 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 		return true;
 	}
 
+	
+	
+	
+	
+
+	/**
+	 * 替換所有id.value --> introspectedTable.getIbatis2SqlMapNamespace()+ "_" + id.value 
+	 */
 	@Override
-	public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+	public boolean sqlMapDocumentGenerated(Document document,
+			IntrospectedTable introspectedTable) {
+		List<Element> list = document.getRootElement().getElements();
+		
+		for (int i = 0; i < list.size(); i++) {
+			XmlElement xml = (XmlElement) list.get(i);
+			List<Attribute> attrs = xml.getAttributes();
+			for (int j = 0; j < attrs.size(); j++) {
+				if (attrs.get(j).getName().equals("id")) {
+					attrs.get(j).setValue(introspectedTable.getIbatis2SqlMapNamespace()+ "_" + attrs.get(j).getValue());
+				}
+			}
+		}
+		return true;
+	}
+
+
+	public boolean sqlMapDocumentGenerated1(Document document, IntrospectedTable introspectedTable) {
 
 		// 替换所有条件parameterClass中的pojoExample
 		List<Element> list = document.getRootElement().getElements();
@@ -315,25 +211,42 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 	@Override
 	public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
 			IntrospectedTable introspectedTable) {
-		if (databaseType.contains("oracle")) {
-			XmlElement oracleHeadIncludeElement = new XmlElement("include");
-			oracleHeadIncludeElement.addAttribute(new Attribute("refid", "common.Oracle_Pagination_Head"));
-			// 在第一个地方增加
-			element.addElement(0, oracleHeadIncludeElement);
-
-			XmlElement oracleTailIncludeElement = new XmlElement("include");
-			oracleTailIncludeElement.addAttribute(new Attribute("refid", "common.Oracle_Pagination_Tail"));
-			// 在最后增加
-			element.addElement(element.getElements().size(), oracleTailIncludeElement);
-		} else if (databaseType.contains("mysql")) {
-			XmlElement mysqlLimitIncludeElement = new XmlElement("include");
-			mysqlLimitIncludeElement.addAttribute(new Attribute("refid", "common.Mysql_Pagination_Limit"));
-			// 在最后增加
-			element.addElement(element.getElements().size(), mysqlLimitIncludeElement);
-		}
+		
+		replaceInclude(element);
+//		logger.info(element);
 		return true;
 	}
 
+	/**
+	 * 替換 include
+	 * @param element
+	 */
+	private void replaceInclude(XmlElement element) {
+		List<Element> xes = element.getElements();
+		for(Element e : xes){
+			if(e instanceof XmlElement){
+				XmlElement xe = (XmlElement) e;
+				if("include".equals(xe.getName())){
+					List<Attribute> attrs = xe.getAttributes();
+					for (int j = 0; j < attrs.size(); j++) {
+						if (attrs.get(j).getName().equals("refid")) {
+//							attrs.get(j).setValue(criteria.getFullyQualifiedName());
+//							logger.info(attrs.get(j).getValue());
+							String value = attrs.get(j).getValue();
+							attrs.get(j).setValue(value.replace(".", "_"));
+						}
+					}
+				}
+				if(xe.getElements().size()>0){
+					replaceInclude(xe);
+				}
+			}
+		}
+	}
+
+	
+	
+	
 	@Override
 	public boolean sqlMapSelectByExampleWithBLOBsElementGenerated(XmlElement element,
 			IntrospectedTable introspectedTable) {
@@ -363,6 +276,13 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 	public boolean sqlMapUpdateByExampleSelectiveElementGenerated(
 			XmlElement element, IntrospectedTable introspectedTable) {
 		
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	private void replaceRefid(XmlElement element,
+			IntrospectedTable introspectedTable) {
 		element.removeElement(element.getElements().size()-1);
 		
 		XmlElement isParameterPresentElement = new XmlElement("isParameterPresent"); //$NON-NLS-1$
@@ -370,37 +290,10 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-				introspectedTable.getIbatis2SqlMapNamespace() + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+				introspectedTable.getIbatis2SqlMapNamespace()+ "_" + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
 		isParameterPresentElement.addElement(includeElement);
-		logger.info(element);
-		
-		return true;
 	}
 
-	@Override
-	public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(IntrospectedTable introspectedTable) {
-		Document document = new Document(XmlConstants.IBATIS2_SQL_MAP_PUBLIC_ID, XmlConstants.IBATIS2_SQL_MAP_SYSTEM_ID);
-		XmlElement answer = new XmlElement("sqlMap"); //$NON-NLS-1$
-		document.setRootElement(answer);
-		answer.addAttribute(new Attribute("namespace", //$NON-NLS-1$
-				"common"));
-
-		if (databaseType.contains("oracle")) {
-			answer.addElement(getOracleHead());
-			answer.addElement(getOracleTail());
-		} else if (databaseType.contains("mysql")) {
-			answer.addElement(getMysqlLimit());
-		}
-
-		GeneratedXmlFile gxf = new GeneratedXmlFile(document, properties.getProperty("fileName", "common_SqlMap.xml"), //$NON-NLS-1$ //$NON-NLS-2$
-				context.getSqlMapGeneratorConfiguration().getTargetPackage(), //$NON-NLS-1$
-				context.getSqlMapGeneratorConfiguration().getTargetProject(), //$NON-NLS-1$
-				false);
-
-		List<GeneratedXmlFile> files = new ArrayList<GeneratedXmlFile>(1);
-		files.add(gxf);
-		return files;
-	}
 
 	private XmlElement getOracleHead() {
 		XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
@@ -418,6 +311,63 @@ public class IbatisCriteriaPlugin extends PluginAdapter {
 		answer.addElement(dynamicElement);
 		return answer;
 	}
+
+	
+	
+	
+	
+	
+	@Override
+	public boolean sqlMapCountByExampleElementGenerated(XmlElement element,
+			IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	@Override
+	public boolean sqlMapDeleteByExampleElementGenerated(XmlElement element,
+			IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	@Override
+	public boolean sqlMapUpdateByExampleWithBLOBsElementGenerated(
+			XmlElement element, IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	@Override
+	public boolean sqlMapUpdateByExampleWithoutBLOBsElementGenerated(
+			XmlElement element, IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	@Override
+	public boolean sqlMapUpdateByPrimaryKeySelectiveElementGenerated(
+			XmlElement element, IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+	@Override
+	public boolean sqlMapInsertSelectiveElementGenerated(XmlElement element,
+			IntrospectedTable introspectedTable) {
+		replaceRefid(element, introspectedTable);
+		return true;
+	}
+
+
+
+
+
 
 	private XmlElement getOracleTail() {
 		XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
