@@ -1,9 +1,8 @@
 package test;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
@@ -16,8 +15,8 @@ public class _Ibator_Run_Test {
 	public static void main(String[] args) {
 		_Ibator_Run_Test test = new _Ibator_Run_Test();
 //		test.main1("grid1.xml");
-		test.main1("mysql.xml");
-//		test.main1("mysql-1.xml");
+//		test.main1("mysql.xml");
+		test.main1("mysql-1.xml");
 //		test.main1("mysql_bank.xml");
 //		test.main1("authority_mysql.xml");
 //		test.main1("authority_oracle.xml");

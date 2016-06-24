@@ -42,22 +42,22 @@ public class IbatisNoNameSpaceDAOTemplate extends AbstractDAOTemplate {
 
 	@Override
 	protected void configureDeleteMethodTemplate() {
-		setDeleteMethodTemplate("getSqlMapClientTemplate().delete(\"{0}-{1}\", {2});"); //$NON-NLS-1$
+		setDeleteMethodTemplate("getSqlMapClientTemplate().delete(\"{0}_{1}\", {2});"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void configureInsertMethodTemplate() {
-		setInsertMethodTemplate("getSqlMapClientTemplate().insert(\"{0}-{1}\", {2});"); //$NON-NLS-1$
+		setInsertMethodTemplate("getSqlMapClientTemplate().insert(\"{0}_{1}\", {2});"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void configureQueryForListMethodTemplate() {
-		setQueryForListMethodTemplate("getSqlMapClientTemplate().queryForList(\"{0}-{1}\", {2});"); //$NON-NLS-1$
+		setQueryForListMethodTemplate("getSqlMapClientTemplate().queryForList(\"{0}_{1}\", {2});"); //$NON-NLS-1$
 	}
 
 	@Override
 	protected void configureQueryForObjectMethodTemplate() {
-		setQueryForObjectMethodTemplate("getSqlMapClientTemplate().queryForObject(\"{0}-{1}\", {2});"); //$NON-NLS-1$
+		setQueryForObjectMethodTemplate("getSqlMapClientTemplate().queryForObject(\"{0}_{1}\", {2});"); //$NON-NLS-1$
 	}
 
 	@Override
@@ -67,6 +67,6 @@ public class IbatisNoNameSpaceDAOTemplate extends AbstractDAOTemplate {
 
 	@Override
 	protected void configureUpdateMethodTemplate() {
-		setUpdateMethodTemplate("getSqlMapClientTemplate().update(\"{0}-{1}\", {2});"); //$NON-NLS-1$
+		setUpdateMethodTemplate("getSqlMapClientTemplate().update(\"{0}_{1}\", {2});"); //$NON-NLS-1$
 	}
 }

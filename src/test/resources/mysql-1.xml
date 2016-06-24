@@ -5,7 +5,7 @@
 
 	<context id="Ibatis2Java5" targetRuntime="Ibatis2Java5">
 
-		<!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 		<plugin type="org.mybatis.generator.plugins.IbatisCriteriaPlugin" />
 		<plugin type="org.mybatis.generator.plugins.AnnotationPlugin" />
 		 <plugin type="org.mybatis.generator.plugins.IbatisServicePlugin">
@@ -24,7 +24,7 @@
 		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
 			<property name="searchString" value="Example$"/>
 			<property name="replaceString" value="Criteria"/>
-		</plugin> -->
+		</plugin>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/b2b"
 			userId="root" password="111111" />
 
@@ -41,7 +41,7 @@
 		</javaClientGenerator>
 
 
-			<table tableName="broker" domainObjectName="Broker" />
+		<table tableName="mlq_product_picture" domainObjectName="Mlq_product_picture"/>
 	</context>
 
 
