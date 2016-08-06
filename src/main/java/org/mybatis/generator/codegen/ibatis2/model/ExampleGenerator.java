@@ -167,7 +167,7 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addBodyLine("if(start<=0){"); //$NON-NLS-1$
 		method.addBodyLine("start = 1;"); //$NON-NLS-1$
 		method.addBodyLine("}"); //$NON-NLS-1$
-		method.addBodyLine("return start;"); //$NON-NLS-1$
+		method.addBodyLine("return (start-1)*getLimit();"); //$NON-NLS-1$
 		topLevelClass.addMethod(method);
 
 		// add field, getter, setter for limit
