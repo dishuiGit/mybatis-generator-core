@@ -212,37 +212,10 @@ public class IbatisPlugin1 extends PluginAdapter {
 	public boolean sqlMapSelectByExampleWithoutBLOBsElementGenerated(XmlElement element,
 			IntrospectedTable introspectedTable) {
 		
-		replaceInclude(element);
-//		logger.info(element);
+		element.addElement(element.getElements().size(), getMysqlLimit());
 		return true;
 	}
 
-	/**
-	 * 替換 include
-	 * @param element
-	 */
-	private void replaceInclude(XmlElement element) {
-		List<Element> xes = element.getElements();
-		for(Element e : xes){
-			if(e instanceof XmlElement){
-				XmlElement xe = (XmlElement) e;
-				if("include".equals(xe.getName())){
-					List<Attribute> attrs = xe.getAttributes();
-					for (int j = 0; j < attrs.size(); j++) {
-						if (attrs.get(j).getName().equals("refid")) {
-//							attrs.get(j).setValue(criteria.getFullyQualifiedName());
-//							logger.info(attrs.get(j).getValue());
-							String value = attrs.get(j).getValue();
-							attrs.get(j).setValue(value.replace(".", "_"));
-						}
-					}
-				}
-				if(xe.getElements().size()>0){
-					replaceInclude(xe);
-				}
-			}
-		}
-	}
 
 	
 	
@@ -261,15 +234,13 @@ public class IbatisPlugin1 extends PluginAdapter {
 			// 在最后增加
 			element.addElement(element.getElements().size(), oracleTailIncludeElement);
 		} else if (databaseType.contains("mysql")) {
-			XmlElement mysqlLimitIncludeElement = new XmlElement("include");
-			mysqlLimitIncludeElement.addAttribute(new Attribute("refid", "common.Mysql_Pagination_Limit"));
+			
 			// 在最后增加
-			element.addElement(element.getElements().size(), mysqlLimitIncludeElement);
+			element.addElement(element.getElements().size(), getMysqlLimit());
 		}
 		return true;
 	}
 
-	
 	
 	
 	@Override
@@ -388,9 +359,6 @@ public class IbatisPlugin1 extends PluginAdapter {
 	}
 
 	private XmlElement getMysqlLimit() {
-		XmlElement answer = new XmlElement("sql"); //$NON-NLS-1$
-
-		answer.addAttribute(new Attribute("id", "Mysql_Pagination_Limit")); //$NON-NLS-1$
 
 		XmlElement dynamicElement = new XmlElement("dynamic");
 		XmlElement outerisNotEmptyElement = new XmlElement("isNotNull");
@@ -400,7 +368,6 @@ public class IbatisPlugin1 extends PluginAdapter {
 		innerisNotEmptyElement.addElement(new TextElement("<![CDATA[ limit #start# , #limit# ]]>"));
 		outerisNotEmptyElement.addElement(innerisNotEmptyElement);
 		dynamicElement.addElement(outerisNotEmptyElement);
-		answer.addElement(dynamicElement);
-		return answer;
+		return dynamicElement;
 	}
 }

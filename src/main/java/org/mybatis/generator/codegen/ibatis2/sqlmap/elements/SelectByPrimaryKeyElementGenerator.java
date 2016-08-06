@@ -41,10 +41,10 @@ public class SelectByPrimaryKeyElementGenerator extends AbstractXmlElementGenera
 		answer.addAttribute(new Attribute("id", introspectedTable.getSelectByPrimaryKeyStatementId())); //$NON-NLS-1$
 		if (introspectedTable.getRules().generateResultMapWithBLOBs()) {
 			answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-					introspectedTable.getResultMapWithBLOBsId()));
+					introspectedTable.getIbatis2SqlMapNamespace() + "_" +introspectedTable.getResultMapWithBLOBsId()));
 		} else {
 			answer.addAttribute(new Attribute("resultMap", //$NON-NLS-1$
-					introspectedTable.getBaseResultMapId()));
+					introspectedTable.getIbatis2SqlMapNamespace() + "_" +introspectedTable.getBaseResultMapId()));
 		}
 
 		String parameterType;

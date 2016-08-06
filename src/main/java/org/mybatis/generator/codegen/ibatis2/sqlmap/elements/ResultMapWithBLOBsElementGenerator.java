@@ -59,7 +59,7 @@ public class ResultMapWithBLOBsElementGenerator extends AbstractXmlElementGenera
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(introspectedTable.getIbatis2SqlMapNamespace());
-		sb.append('.');
+		sb.append('_');
 		sb.append(introspectedTable.getBaseResultMapId());
 		answer.addAttribute(new Attribute("extends", sb.toString())); //$NON-NLS-1$
 

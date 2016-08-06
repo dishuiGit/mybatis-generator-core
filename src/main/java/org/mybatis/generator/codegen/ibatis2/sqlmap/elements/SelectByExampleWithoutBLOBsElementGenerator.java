@@ -38,7 +38,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
 
 		answer.addAttribute(new Attribute("id", //$NON-NLS-1$
 				introspectedTable.getSelectByExampleStatementId()));
-		answer.addAttribute(new Attribute("resultMap", introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
+		answer.addAttribute(new Attribute("resultMap", introspectedTable.getIbatis2SqlMapNamespace() + "_" +introspectedTable.getBaseResultMapId())); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("parameterClass", introspectedTable.getExampleType())); //$NON-NLS-1$
 
 		context.getCommentGenerator().addComment(answer);
@@ -72,7 +72,7 @@ public class SelectByExampleWithoutBLOBsElementGenerator extends AbstractXmlElem
 
 		XmlElement includeElement = new XmlElement("include"); //$NON-NLS-1$
 		includeElement.addAttribute(new Attribute("refid", //$NON-NLS-1$
-				introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
+				introspectedTable.getIbatis2SqlMapNamespace() + "_" + introspectedTable.getExampleWhereClauseId())); //$NON-NLS-1$
 		isParameterPresenteElement.addElement(includeElement);
 
 		XmlElement isNotNullElement = new XmlElement("isNotNull"); //$NON-NLS-1$

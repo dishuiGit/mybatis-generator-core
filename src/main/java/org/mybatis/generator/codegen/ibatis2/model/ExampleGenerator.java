@@ -144,6 +144,56 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		commentGenerator.addGeneralMethodComment(method, introspectedTable);
 		topLevelClass.addMethod(method);
 
+		// add field, getter, setter for start
+		field = new Field();
+		field.setVisibility(JavaVisibility.PROTECTED);
+		field.setType(FullyQualifiedJavaType.getIntInstance());
+		field.setName("start"); //$NON-NLS-1$
+		commentGenerator.addFieldComment(field, introspectedTable);
+		topLevelClass.addField(field);
+
+		method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setName("setStart"); //$NON-NLS-1$
+		method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "start")); //$NON-NLS-1$
+		method.addBodyLine("this.start = start;"); //$NON-NLS-1$
+		commentGenerator.addGeneralMethodComment(method, introspectedTable);
+		topLevelClass.addMethod(method);
+
+		method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		method.setName("getStart"); //$NON-NLS-1$
+		method.addBodyLine("if(start<=0){"); //$NON-NLS-1$
+		method.addBodyLine("start = 1;"); //$NON-NLS-1$
+		method.addBodyLine("}"); //$NON-NLS-1$
+		method.addBodyLine("return start;"); //$NON-NLS-1$
+		topLevelClass.addMethod(method);
+
+		// add field, getter, setter for limit
+		field = new Field();
+		field.setVisibility(JavaVisibility.PROTECTED);
+		field.setType(FullyQualifiedJavaType.getIntInstance());
+		field.setName("limit"); //$NON-NLS-1$
+		topLevelClass.addField(field);
+
+		method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setName("setLimit"); //$NON-NLS-1$
+		method.addParameter(new Parameter(FullyQualifiedJavaType.getIntInstance(), "limit")); //$NON-NLS-1$
+		method.addBodyLine("this.limit = limit;"); //$NON-NLS-1$
+		topLevelClass.addMethod(method);
+
+		method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		method.setReturnType(FullyQualifiedJavaType.getIntInstance());
+		method.setName("getLimit"); //$NON-NLS-1$
+		method.addBodyLine("if(limit == 0){"); //$NON-NLS-1$
+		method.addBodyLine("return 10;"); //$NON-NLS-1$
+		method.addBodyLine("}"); //$NON-NLS-1$
+		method.addBodyLine("return limit;"); //$NON-NLS-1$
+		topLevelClass.addMethod(method);
+
 		// add field and methods for the list of ored criteria
 		field = new Field();
 		field.setVisibility(JavaVisibility.PROTECTED);
@@ -343,7 +393,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 
 		FullyQualifiedJavaType listOfMaps;
 		if (generateForJava5) {
-			listOfMaps = new FullyQualifiedJavaType("java.util.List<java.util.Map<java.lang.String, java.lang.Object>>"); //$NON-NLS-1$
+			listOfMaps = new FullyQualifiedJavaType(
+					"java.util.List<java.util.Map<java.lang.String, java.lang.Object>>"); //$NON-NLS-1$
 		} else {
 			listOfMaps = new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
 		}
@@ -432,7 +483,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(listOfObjects, "values")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
 		method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
-		method.addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+		method.addBodyLine(
+				"throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
 		method.addBodyLine("}"); //$NON-NLS-1$
 		if (generateForJava5) {
 			method.addBodyLine("Map<String, Object> map = new HashMap<String, Object>();"); //$NON-NLS-1$
@@ -502,7 +554,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method.addParameter(new Parameter(listOfDates, "values")); //$NON-NLS-1$
 			method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
 			method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
-			method.addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+			method.addBodyLine(
+					"throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
 			method.addBodyLine("}"); //$NON-NLS-1$
 			if (generateForJava5) {
 				method.addBodyLine("List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();"); //$NON-NLS-1$
@@ -530,7 +583,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
 			method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
 			method.addBodyLine("}"); //$NON-NLS-1$
-			method.addBodyLine("addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);"); //$NON-NLS-1$
+			method.addBodyLine(
+					"addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);"); //$NON-NLS-1$
 			answer.addMethod(method);
 		}
 
@@ -556,7 +610,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method.addParameter(new Parameter(listOfDates, "values")); //$NON-NLS-1$
 			method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
 			method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
-			method.addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+			method.addBodyLine(
+					"throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
 			method.addBodyLine("}"); //$NON-NLS-1$
 			if (generateForJava5) {
 				method.addBodyLine("List<java.sql.Time> timeList = new ArrayList<java.sql.Time>();"); //$NON-NLS-1$
@@ -584,7 +639,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 			method.addBodyLine("if (value1 == null || value2 == null) {"); //$NON-NLS-1$
 			method.addBodyLine("throw new RuntimeException(\"Between values for \" + property + \" cannot be null\");"); //$NON-NLS-1$
 			method.addBodyLine("}"); //$NON-NLS-1$
-			method.addBodyLine("addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);"); //$NON-NLS-1$
+			method.addBodyLine(
+					"addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);"); //$NON-NLS-1$
 			answer.addMethod(method);
 		}
 
@@ -634,7 +690,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		// add new private fields and public accessors in the class
 		FullyQualifiedJavaType listOfMaps;
 		if (generateForJava5) {
-			listOfMaps = new FullyQualifiedJavaType("java.util.List<java.util.Map<java.lang.String, java.lang.Object>>"); //$NON-NLS-1$
+			listOfMaps = new FullyQualifiedJavaType(
+					"java.util.List<java.util.Map<java.lang.String, java.lang.Object>>"); //$NON-NLS-1$
 		} else {
 			listOfMaps = new FullyQualifiedJavaType("java.util.List"); //$NON-NLS-1$
 		}
@@ -703,9 +760,9 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		sb.setLength(0);
 		sb.append(introspectedColumn.getJavaProperty());
 		if (generateForJava5) {
-			sb.append("CriteriaWithSingleValue = new ArrayList<Map<String, Object>>();"); //$NON-NLS-1$;
+			sb.append("CriteriaWithSingleValue = new ArrayList<Map<String, Object>>();"); //$NON-NLS-1$ ;
 		} else {
-			sb.append("CriteriaWithSingleValue = new ArrayList();"); //$NON-NLS-1$;
+			sb.append("CriteriaWithSingleValue = new ArrayList();"); //$NON-NLS-1$ ;
 		}
 		constructor.addBodyLine(sb.toString());
 
@@ -775,7 +832,8 @@ public class ExampleGenerator extends AbstractJavaGenerator {
 		method.addParameter(new Parameter(listOfObjects, "values")); //$NON-NLS-1$
 		method.addParameter(new Parameter(FullyQualifiedJavaType.getStringInstance(), "property")); //$NON-NLS-1$
 		method.addBodyLine("if (values == null || values.size() == 0) {"); //$NON-NLS-1$
-		method.addBodyLine("throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
+		method.addBodyLine(
+				"throw new RuntimeException(\"Value list for \" + property + \" cannot be null or empty\");"); //$NON-NLS-1$
 		method.addBodyLine("}"); //$NON-NLS-1$
 		if (generateForJava5) {
 			method.addBodyLine("Map<String, Object> map = new HashMap<String, Object>();"); //$NON-NLS-1$

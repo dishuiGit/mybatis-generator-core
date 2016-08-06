@@ -63,14 +63,14 @@ public abstract class AbstractXmlElementGenerator extends AbstractGenerator {
 	protected XmlElement getBaseColumnListElement() {
 		XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-				introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
+				introspectedTable.getIbatis2SqlMapNamespace() + "_" + introspectedTable.getBaseColumnListId())); //$NON-NLS-1$
 		return answer;
 	}
 
 	protected XmlElement getBlobColumnListElement() {
 		XmlElement answer = new XmlElement("include"); //$NON-NLS-1$
 		answer.addAttribute(new Attribute("refid", //$NON-NLS-1$
-				introspectedTable.getIbatis2SqlMapNamespace() + "." + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
+				introspectedTable.getIbatis2SqlMapNamespace() + "_" + introspectedTable.getBlobColumnListId())); //$NON-NLS-1$
 		return answer;
 	}
 }
