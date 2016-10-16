@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+	<context id="Ibatis2Java5" targetRuntime="Ibatis2Java5">
+
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<plugin type="org.mybatis.generator.plugins.HibernateCriteriaPlugin" />
+		<plugin type="org.mybatis.generator.plugins.AnnotationPlugin" />
+		<!--<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">-->
+			<!--<property name="searchString" value="Example$"/>-->
+			<!--<property name="replaceString" value="Criteria"/>-->
+		<!--</plugin>-->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mailiqing"
+			userId="root" password="111111" />
+
+		<javaModelGenerator targetPackage="mysqlibatis3" targetProject="gen">
+			<property name="enableSubPackages" value="true" />
+		</javaModelGenerator>
+
+		<!--<sqlMapGenerator targetPackage="mysqlibatis3.sqlmap" targetProject="gen">-->
+			<!--<property name="enableSubPackages" value="true" />-->
+		<!--</sqlMapGenerator>-->
+
+		<!--&lt;!&ndash; XMLMAPPER SPRING &ndash;&gt;-->
+		<!--<javaClientGenerator type="SPRING" targetPackage="mysqlibatis3.dao" targetProject="gen">-->
+		<!--</javaClientGenerator>-->
+
+
+		<!--<table tableName="mlq_product_picture" domainObjectName="MlqProductPicture"/>-->
+		<table tableName="app_share" domainObjectName="AppShare"/>
+		<!--<table tableName="app_user_login" domainObjectName="AppUserLogin"/>-->
+		<table tableName="broker" domainObjectName="Broker"/>
+	</context>
+
+</generatorConfiguration>

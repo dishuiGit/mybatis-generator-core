@@ -51,7 +51,10 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 		Plugin plugins = context.getPlugins();
 		CommentGenerator commentGenerator = context.getCommentGenerator();
 
-		TopLevelClass topLevelClass = new TopLevelClass(introspectedTable.getBaseRecordType());
+        String targetPackage = context.getJavaModelGeneratorConfiguration().getTargetPackage();
+        String domainObjectName = introspectedTable.getTableConfiguration().getDomainObjectName();
+
+		TopLevelClass topLevelClass = new TopLevelClass(targetPackage+".model."+domainObjectName);
 		topLevelClass.setVisibility(JavaVisibility.PUBLIC);
 		commentGenerator.addJavaFileComment(topLevelClass);
 
@@ -132,5 +135,13 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
 	private boolean includeBLOBColumns() {
 		return !introspectedTable.getRules().generateRecordWithBLOBsClass() && introspectedTable.hasBLOBColumns();
+	}
+
+	@Override
+	public Method getJavaBeansGetter(IntrospectedColumn introspectedColumn) {
+		Method getter = super.getJavaBeansGetter(introspectedColumn);
+		String actualColumnName = introspectedColumn.getActualColumnName();
+		getter.addAnnotation("@Column(name=\"" +actualColumnName+ "\")");
+		return getter;
 	}
 }

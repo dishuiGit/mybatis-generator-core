@@ -196,4 +196,6 @@ public class BaseRecordGenerator extends AbstractJavaGenerator {
 
 		return introspectedColumns;
 	}
+
+
 }

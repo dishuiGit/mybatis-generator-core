@@ -168,7 +168,7 @@ public class Context extends PropertyHolder {
 
 		if (it != null && it.requiresXMLGenerator()) {
 			if (sqlMapGeneratorConfiguration == null) {
-				errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
+//				errors.add(getString("ValidationError.9", id)); //$NON-NLS-1$
 			} else {
 				sqlMapGeneratorConfiguration.validate(errors, id);
 			}
@@ -466,10 +466,10 @@ public class Context extends PropertyHolder {
 				introspectedTable.initialize();
 				introspectedTable.calculateGenerators(warnings, callback);
 				generatedJavaFiles.addAll(introspectedTable.getGeneratedJavaFiles());
-				generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
+//				generatedXmlFiles.addAll(introspectedTable.getGeneratedXmlFiles());
 
 				generatedJavaFiles.addAll(pluginAggregator.contextGenerateAdditionalJavaFiles(introspectedTable));
-				generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
+//				generatedXmlFiles.addAll(pluginAggregator.contextGenerateAdditionalXmlFiles(introspectedTable));
 			}
 		}
 

@@ -11,7 +11,7 @@
 		 <plugin type="org.mybatis.generator.plugins.IbatisServicePlugin">
 			<property name="targetPackage" value="mysqlibatis3.service" />
 			<property name="implementationPackage" value="mysqlibatis3.service.impl" />
-			<property name="targetProject" value="./src/test/java/gen" />
+			<property name="targetProject" value="gen" />
 			<property name="enableInsert" value="true" />
 			<property name="enableUpdateByExampleSelective" value="true" />
 			<property name="enableInsertSelective" value="true" />
@@ -25,19 +25,19 @@
 			<property name="searchString" value="Example$"/>
 			<property name="replaceString" value="Criteria"/>
 		</plugin>
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/b2b"
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/mailiqing"
 			userId="root" password="111111" />
 
-		<javaModelGenerator targetPackage="mysqlibatis3.pojo" targetProject="./src/test/java/gen">
+		<javaModelGenerator targetPackage="mysqlibatis3.pojo" targetProject="gen">
 			<property name="enableSubPackages" value="true" />
 		</javaModelGenerator>
 
-		<sqlMapGenerator targetPackage="mysqlibatis3.sqlmap" targetProject="./src/test/java/gen">
+		<sqlMapGenerator targetPackage="mysqlibatis3.sqlmap" targetProject="gen">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		<!-- XMLMAPPER SPRING -->
-		<javaClientGenerator type="SPRING" targetPackage="mysqlibatis3.dao" targetProject="./src/test/java/gen">
+		<javaClientGenerator type="SPRING" targetPackage="mysqlibatis3.dao" targetProject="gen">
 		</javaClientGenerator>
 
 
@@ -52,7 +52,7 @@
 		<plugin type="org.mybatis.generator.plugins.MybatisServicePlugin">
 			<property name="targetPackage" value="mysqlmybatis.service" />
 			<property name="implementationPackage" value="mysqlmybatis.service.impl" />
-			<property name="targetProject" value="./src/test/java/gen" />
+			<property name="targetProject" value="gen" />
 			<property name="enableInsert" value="true" />
 			<property name="enableUpdateByExampleSelective" value="true" />
 			<property name="enableInsertSelective" value="true" />
@@ -65,16 +65,16 @@
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/bank"
 			userId="root" password="xinxin" />
 
-		<javaModelGenerator targetPackage="mysqlmybatis.pojo" targetProject="./src/test/java/gen">
+		<javaModelGenerator targetPackage="mysqlmybatis.pojo" targetProject="gen">
 			<property name="enableSubPackages" value="true" />
 		</javaModelGenerator>
 
-		<sqlMapGenerator targetPackage="mysqlmybatis.sqlmap" targetProject="./src/test/java/gen">
+		<sqlMapGenerator targetPackage="mysqlmybatis.sqlmap" targetProject="gen">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
 		XMLMAPPER SPRING
-		<javaClientGenerator type="XMLMAPPER" targetPackage="mysqlmybatis.dao" targetProject="./src/test/java/gen">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="mysqlmybatis.dao" targetProject="gen">
 		</javaClientGenerator>
 
 
